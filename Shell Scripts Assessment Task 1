@@ -1,0 +1,9 @@
+echo "Enter MySQL password"
+read -s password
+
+mysql -D db1725049 -u 1725049 -p$password -se "create table NumberGrid(
+NG_ID int(1) NOT NULL,
+NG_Binary varchar(8),
+NG_Hex varchar(2),
+NG_Oct varchar(3),
+NG_Dec varchar(4))"
