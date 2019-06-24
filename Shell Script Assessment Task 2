@@ -1,0 +1,6 @@
+echo "Enter MySQL password"
+read -s password
+
+mysql -D db1725049 -u 1725049 -p$password -se"insert into NumberGrid(NG_ID, NG_Binary, NG_Hex, NG_Oct, NG_Dec) values (1, \"01001000\", NULL, NULL, NULL), (2, NULL, \"82\", NULL, NULL), (3, NULL, NULL, \"171\", NULL), (4, NULL, NULL, NULL, \"19\");"
+
+
