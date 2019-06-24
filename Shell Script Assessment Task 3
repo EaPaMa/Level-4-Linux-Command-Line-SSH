@@ -1,0 +1,1338 @@
+echo "Enter MySQL password"
+read -s password
+
+row1=$(mysql -D db1725049 -u 1725049 -p$password -se"select * from NumberGrid where NG_ID=1;")
+row2=$(mysql -D db1725049 -u 1725049 -p$password -se"select * from NumberGrid where NG_ID=2;")
+row3=$(mysql -D db1725049 -u 1725049 -p$password -se"select * from NumberGrid where NG_ID=3;")
+row4=$(mysql -D db1725049 -u 1725049 -p$password -se"select * from NumberGrid where NG_ID=4;")
+row1List=($row1)
+row2List=($row2)
+row3List=($row3)
+row4List=($row4)
+
+#echo ${row1List[1]}
+#echo ${row2List[2]}
+
+bin1=${row1List[1]} #calling row NG_ID1 column NG_binary
+hex1=${row1List[2]} #calling row NG_ID1 column NG_hex
+oct1=${row1List[3]} #calling row NG_ID1 column NG_oct
+dec1=${row1List[4]} #calling row NG_ID1 column NG_dec
+bin2=${row2List[1]} #calling row NG_ID2 column NG_binary
+hex2=${row2List[2]} #calling row NG_ID2 column NG_hex
+oct2=${row2List[3]} #calling row NG_ID2 column NG_oct
+dec2=${row2List[4]} #calling row NG_ID2 column NG_dec
+bin3=${row3List[1]} #calling row NG_ID3 column NG_binary
+hex3=${row3List[2]} #calling row NG_ID3 column NG_hex
+oct3=${row3List[3]} #calling row NG_ID3 column NG_oct
+dec3=${row3List[4]} #calling row NG_ID3 column NG_dec
+bin4=${row4List[1]} #calling row NG_ID4 column NG_binary
+hex4=${row4List[2]} #calling row NG_ID4 column NG_hex
+oct4=${row4List[3]} #calling row NG_ID4 column NG_oct
+dec4=${row4List[4]} #calling row NG_ID4 column NG_dec
+
+
+
+#First row conversion starts here NG_ID = 1 ********************************************************
+
+#Binary to Hex conversion
+a=${bin1:0:4}
+b=${bin1:4:4}
+
+#echo $a
+#echo $b
+
+
+c=${bin1:0:1}
+cc=$(($c*8))
+#echo $cc
+d=${bin1:1:1}
+dd=$(( $d*4 ))
+#echo $dd
+e=${bin1:2:1}
+ee=$(( $e*2 ))
+#echo $ee
+f=${bin1:3:1}
+ff=$(( $f*1 ))
+#echo $ff
+
+
+
+
+total1=$(( $cc+$dd+$ee+$ff ))
+
+#echo $total1
+
+g=${bin1:4:1}
+gg=$(( $g*8 ))
+#echo $gg
+h=${bin1:5:1}
+hh=$(( $h*4 ))
+#echo $hh
+i=${bin1:6:1}
+ii=$(( $i*2 ))
+#echo $ii
+j=${bin1:7:1}
+jj=$(( $j*1 ))
+#echo $jj
+
+total2=$(( $gg+$hh+$ii+$jj ))
+
+
+
+#echo $total2
+
+if [[ ($total1 -gt 0) && ($total1 -lt 10)]]
+then
+answer1=$total1
+fi
+
+if [ $total1 == 10 ]
+then
+answer1="A"
+fi
+
+if [ $total1 == 11 ]
+then
+answer1="B"
+fi
+
+if [ $total1 == 12 ]
+then
+answer1="C"
+fi
+
+if [ $total1 == 13 ]
+then
+answer1="D"
+fi
+
+if [ $total1 == 14 ]
+then
+answer1="E"
+fi
+
+if [ $total1 == 15 ]
+then 
+answer1="F"
+fi
+
+if [[ ($total2 -gt 0) && ($total2 -lt 10)]]
+then
+answer2=$total2
+fi
+
+
+
+if [ $total2 == 10 ]
+then
+answer2="A"
+fi
+
+if [ $total2 == 11 ]
+then
+answer2="B"
+fi
+
+if [ $total2 == 12 ]
+then
+answer2="C"
+fi
+
+if [ $total2 == 13 ]
+then
+answer2="D"
+fi
+
+if [ $total2 == 14 ]
+then
+answer2="E"
+fi
+
+if [ $total2 == 15 ]
+then
+answer2="F"
+fi
+
+#Hex cnoversion
+Hexxy=$answer1$answer2
+
+
+
+
+#Binary to Oct conversion
+a=${bin1:0:2}
+b=${bin1:2:3}
+c=${bin1:5:3}
+
+
+#from right to left, the first 3rd to make up the Octal conversion
+c1=${bin1:5:1}
+c11=$(( $c1*4 ))
+#echo $c11
+c2=${bin1:6:1}
+c22=$(( $c2*2 ))
+#echo $c22
+c3=${bin1:7:1}
+c33=$(( $c3 ))
+#echo $c33
+total1=$(( $c11+$c22+$c33 ))
+#echo $total1
+
+
+
+#from right to left, the second 3rd to make up the octal conversion
+b1=${bin1:2:1}
+b11=$(( $b1*4 ))
+#echo $b11
+b2=${bin1:3:1}
+b22=$(( $b2*2 ))
+#echo $b22
+b3=${bin1:4:1}
+b33=$(( $b3*1 ))
+#echo $b33
+total2=$(( $b11+$b22+$b33 ))
+#echo $total2
+
+
+
+#from right to left, the third 3rd to make up the octal conversion
+a1=$(( 0*4 ))
+#echo $a1
+a2=${bin1:0:1}
+a22=$(( $a2*2 ))
+#echo $a22
+a3=${bin1:1:1}
+a33=$(( $a3*1 ))
+#echo $a33
+total3=$(( $a1+$a22+$a33 ))
+#echo $total3
+
+#Conversion output
+Octyy=$total3$total2$total1
+
+
+
+#Binary to Decimal conversion
+
+firstBit=${bin1:0:1}
+secondBit=${bin1:1:1}
+thirdBit=${bin1:2:1}
+fourthBit=${bin1:3:1}
+fifthBit=${bin1:4:1}
+sixthBit=${bin1:5:1}
+seventhBit=${bin1:6:1}
+eighthBit=${bin1:7:1}
+
+
+
+#if binary starts with a 1, making it a negative number:
+if [[ $firstBit == "1" ]]
+then
+	firstBitSwap=0
+	if [[ $secondBit == "1" ]]
+	then
+		secondBitSwap=0
+	else
+		secondBitSwap=1
+	fi
+
+	if [[ $thirdBit == "1" ]]
+	then
+		thirdBitSwap=0
+	else
+		thirdBitSwap=1
+	fi
+
+	if [[ $fourthBit == "1" ]]
+	then
+		fourthBitSwap=0
+	else
+		fourthBitSwap=1
+	fi
+
+	if [[ $fifthBit == "1" ]]
+	then
+		fifthBitSwap=0
+	else
+		fifthBitSwap=1
+	fi
+
+	if [[ $sixthBit == "1" ]]
+	then
+		sixthBitSwap=0
+	else
+		sixthBitSwap=1
+	fi
+
+	if [[ $seventhBit == "1" ]]
+	then
+		seventhBitSwap=0
+	else
+		seventhBitSwap=1
+	fi
+
+	if [[ $eighthBit == "1" ]]
+	then
+		eighthBitSwap=$((0 + 1))
+	else
+		eighthBitSwap=$((1 + 1))
+	fi
+
+	aBitSwapC=$(($firstBitSwap * 128))
+	bBitSwapC=$(($secondBitSwap * 64))
+	cBitSwapC=$(($thirdBitSwap * 32))
+	dBitSwapC=$(($fourthBitSwap * 16))
+	eBitSwapC=$(($fifthBitSwap * 8))
+	fBitSwapC=$(($sixthBitSwap * 4))
+	gBitSwapC=$(($seventhBitSwap * 2))
+	hBitSwapC=$(($eighthBitSwap * 1))
+
+	total=$(($aBitswapC+$bBitswapC+$cBitswapC+$dBitswapC+$eBitswapC+$fBitswapC+$gBitswapC+$hBitswapC))
+
+
+fi
+
+
+#positive number code starts here
+if [[ $firstBit == "0" ]]
+then
+
+
+
+	one=${bin1:7:1}
+	one2=$(($one))
+	two=${bin1:6:1}
+	two2=$(($two * 2))
+	four=${bin1:5:1}
+	four2=$(($four * 4))
+	eight=${bin1:4:1}
+	eight2=$(($eight * 8))
+	sixteen=${bin1:3:1}
+	sixteen2=$(($sixteen * 16))
+	thirtytwo=${bin1:2:1}
+	thirtytwo2=$(($thirtytwo * 32))
+	sixtyfour=${bin1:1:1}
+	sixtyfour2=$(($sixtyfour * 64))
+	hundredtwenty8=${bin1:0:1}
+	hundredtwenty82=$(($hundredtwenty8 * 128))
+
+	total=$(($one2+$two2+$four2+$eight2+$sixteen2+$thirtytwo+$sixtyfour2+$hundredtwenty82))
+
+	#echo "the Binary conversion of $bin1 to Decimal is $total"
+
+fi
+
+
+#inserting conversions back into table for row NG_ID = 1
+
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Hex = $Hexxy where NG_ID=1;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Oct = $Octyy where NG_ID=1;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Dec = $total where NG_ID=1;"
+
+#row 1 calculation complete and database updated
+
+
+#conversion of row 2 starts here NG_ID = 2 ******************************************************
+
+#Hex to Binary conversion 
+
+hex2a=${hex2:1:1}
+hex2b=${hex2:0:1}
+
+
+
+#converting last digit of Hex input
+if [ $hex2a == 1 ]
+then
+chex2=0001
+fi
+
+if [ $hex2a == 2 ]
+then
+chex2=0010
+fi
+
+if [ $hex2a == 3 ]
+then
+chex2=0011
+fi
+
+if [ $hex2a == 4 ]
+then
+chex2=0100
+fi
+
+if [ $hex2a == 5 ]
+then
+chex2=0101
+fi
+
+if [ $hex2a == 6 ]
+then
+chex2=0110
+fi
+
+if [ $hex2a == 7 ]
+then
+chex2=0111
+fi
+
+if [ $hex2a == 8 ]
+then
+chex2=1000
+fi
+
+if [ $hex2a == 9 ]
+then
+chex2=1001
+fi
+
+if [ $hex2a == A ]
+then
+chex2=1010
+fi
+
+if [ $hex2a == B ]
+then
+chex2=1011
+fi
+
+if [ $hex2a == C ]
+then
+hex2=1100
+fi
+
+if [ $hex2a == D ]
+then
+chex2=1101
+fi
+
+if [ $hex2a == E ]
+then
+chex2=1110
+fi
+
+if [ $hex2a == F ]
+then
+chex2=1111
+fi
+
+#converting first digit of Hex input
+if [ $hex2b == 1 ]
+then
+chex3=0001
+fi
+
+if [ $hex2b == 2 ]
+then
+chex3=0010
+fi
+
+if [ $hex2b == 3 ]
+then
+chex3=0011
+fi
+
+if [ $hex2b == 4 ]
+then
+chex3=0100
+fi
+
+if [ $hex2b == 5 ]
+then
+chex3=0101
+fi
+
+if [ $hex2b == 6 ]
+then
+chex3=0110
+fi
+
+if [ $hex2b == 7 ]
+then
+chex3=0111
+fi
+
+if [ $hex2b == 8 ]
+then
+chex3=1000
+fi
+
+if [ $hex2b == 9 ]
+then
+chex3=1001
+fi
+
+if [ $hex2b == A ]
+then
+chex3=1010
+fi
+
+if [ $hex2b == B ]
+then
+chex3=1011
+fi
+
+if [ $hex2b == C ]
+then
+chex3=1100
+fi
+
+if [ $hex2b == D ]
+then
+chex3=1101
+fi
+
+if [ $hex2b == E ]
+then
+chex3=1110
+fi
+
+if [ $hex2b == F ]
+then
+chex3=1111
+fi
+
+binaryNG2=$chex3$chex2
+
+
+#Binary to Oct conversion
+
+a=${binaryNG2:0:2}
+b=${binaryNG2:2:3}
+c=${binaryNG2:5:3}
+
+#from right to left, the first 3rd to make up the Octal conversion
+c1=${binaryNG2:5:1}
+c11=$(( $c1*4 ))
+#echo $c11
+c2=${binaryNG2:6:1}
+c22=$(( $c2*2 ))
+#echo $c22
+c3=${binaryNG2:7:1}
+c33=$(( $c3 ))
+#echo $c33
+total1=$(( $c11+$c22+$c33 ))
+#echo $total1
+
+
+#from right to left, the second 3rd to make up the octal conversion
+b1=${binaryNG2:2:1}
+b11=$(( $b1*4 ))
+#echo $b11
+b2=${binaryNG2:3:1}
+b22=$(( $b2*2 ))
+#echo $b22
+b3=${binaryNG2:4:1}
+b33=$(( $b3*1 ))
+#echo $b33
+total2=$(( $b11+$b22+$b33 ))
+#echo $total2
+
+
+#from right to left, the third 3rd to make up the octal conversion
+a1=$(( 0*4 ))
+#echo $a1
+a2=${binaryNG2:0:1}
+a22=$(( $a2*2 ))
+#echo $a22
+a3=${binaryNG2:1:1}
+a33=$(( $a3*1 ))
+#echo $a33
+total3=$(( $a1+$a22+$a33 ))
+#echo $total3
+
+#Conversion output
+OctyyNG2=$total3$total2$total1
+
+
+
+#Octal to Decimal conversion
+
+OctaldecANG2=${OctyyNG2:2:1} #defining the last digit (very right) of the Octal number
+OctaldecBNG2=${OctyyNG2:1:1} #defining the middle number of the Octal number
+OctaldecCNG2=${OctyyNG2:0:1} #defining the 1st digit of the Octal number
+
+#Octal is base 8, Decimal is in base 10; we multiply the corresponding placeholder of the Octal digits by the corresponding power to get the decimal equivalent. 
+
+
+firstlyNG2=$(($OctaldecANG2 * 1)) #muyltiplying the last digit on right x 8 to the power of 0 = 1
+secondlyNG2=$(($OctaldecBNG2 * 8)) #multipluying the middle digit x 8 to the power of 1 = 8
+thirdlyNG2=$(($OctaldecCNG2 * 64)) #multiplying the 1st digit x 8 to the power of 2 = 64
+
+OctaltoDecCNG2=$(($thirdlyNG2 + $secondlyNG2 + $firstlyNG2))
+
+
+
+#inserting conversions back into table for row NG_ID = 2
+
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Binary = $binaryNG2 where NG_ID=2;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Oct = $OctyyNG2 where NG_ID=2;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Dec = $OctaltoDecCNG2 where NG_ID=2;"
+
+#row 2 calculation complete and database updated
+
+
+#conversion of row 3 starts here NG_ID = 3 ********************************************************
+
+
+#Octal to Decimal conversion
+
+OctaldecNG3A=${oct3:2:1} #defining the last digit (very right) of the Octal number
+OctaldecNG3B=${oct3:1:1} #defining the middle number of the Octal number
+OctaldecNG3C=${oct3:0:1} #defining the 1st digit of the Octal number
+
+#Octal is base 8, Decimal is in base 10; we multiply the corresponding placeholder of the Octal digits by the corresponding power to get the decimal equivalent. 
+
+
+firstlyANG3=$(($OctaldecNG3A * 1)) #multiplying the last digit on right x 8 to the power of 0 = 1
+secondlyBNG3=$(($OctaldecNG3B * 8)) #multipluying the middle digit x 8 to the power of 1 = 8
+thirdlyCNG3=$(($OctaldecNG3C * 64)) #multiplying the 1st digit x 8 to the power of 2 = 64
+
+OctaltoDecCNG3=$(($thirdlyCNG3+$secondlyBNG3+$firstlyANG3))
+
+
+#Decimal to hex for row NG_ID 3
+
+if [[ ($OctaltoDecCNG3/128) ]]
+then
+num1NG3=$(( $OctaltoDecCNG3/128 ))
+#echo $num1
+num11NG3=$(( $OctaltoDecCNG3%128 ))
+
+if [[ $num11NG3/64 ]]
+then
+num2NG3=$(( $num11NG3/64 ))
+#echo $num2
+num22NG3=$(( $num11NG3%64 ))
+fi
+
+if [[ $num22NG3/32 ]]
+then
+num3NG3=$(( $num22NG3/32 ))
+#echo $num3
+num33NG3=$(( $num22NG3%32 ))
+fi
+
+if [[ $num33NG3/16 ]]
+then
+num4NG3=$(( $num33NG3/16 ))
+#echo $num4
+num44NG3=$(( $num33NG3%16 ))
+fi
+
+if [[ $num44NG3/8 ]]
+then
+num5NG3=$(( $num44NG3/8 ))
+#echo $num5
+num55NG3=$(( $num44NG3%8 ))
+fi
+
+if [[ $num55NG3/4 ]]
+then
+num6NG3=$(( $num55NG3/4 ))
+#echo $num6
+num66NG3=$(( $num55NG3%4 ))
+fi
+
+if [[ $num66NG3/2 ]]
+then
+num7NG3=$(( $num66NG3/2 ))
+#echo $num7
+num77NG3=$(( $num66NG3%2 ))
+fi
+
+if [[ $num77NG3/1 ]]
+then
+num8NG3=$(( $num77NG3/1 ))
+#echo $num8
+fi
+fi
+
+convertedtobinaryNG3=$num1NG3$num2NG3$num3NG3$num4NG3$num5NG3$num6NG3$num7NG3$num8NG3
+
+aNG3=${convertedtobinaryNG3:0:4}
+bNG3=${convertedtobinaryNG3:4:4}
+
+cNG3=${convertedtobinaryNG3:0:1}
+ccNG3=$(($cNG3 * 8))
+#echo $cc
+dNG3=${convertedtobinaryNG3:1:1}
+ddNG3=$(($dNG3 * 4))
+#echo $dd
+eNG3=${convertedtobinaryNG3:2:1}
+eeNG3=$(($eNG3 * 2))
+#echo $ee
+fNG3=${convertedtobinaryNG3:3:1}
+ffNG3=$(($fNG3 * 1))
+#echo $ff
+
+total1NG3=$(($ccNG3 + $ddNG3 + $eeNG3 + $ffNG3))
+
+#echo $total1
+
+gNG3=${convertedtobinaryNG3:4:1}
+ggNG3=$(($gNG3 * 8))
+#echo $gg
+hNG3=${convertedtobinaryNG3:5:1}
+hhNG3=$(($hNG3 * 4))
+#echo $hh
+iNG3=${convertedtobinaryNG3:6:1}
+iiNG3=$(($iNG3 * 2))
+#echo $ii
+jNG3=${convertedtobinaryNG3:7:1}
+jjNG3=$(($jNG3 * 1))
+#echo $jj
+
+total2NG3=$(($ggNG3 + $hhNG3 + $iiNG3 + $jjNG3))
+
+#echo $total2
+
+if [[ ($total1NG3 -gt 0) && ($total1NG3 -lt 10)]]
+then
+answer1NG3=$total1NG3
+fi
+
+if [[ $total1NG3 == 10 ]]
+then
+answer1NG3="A"
+fi
+
+if [[ $total1NG3 == 11 ]]
+then
+answer1NG3="B"
+fi
+
+if [[ $total1NG3 == 12 ]]
+then
+answer1NG3="C"
+fi
+
+if [[ $total1NG3 == 13 ]]
+then
+answer1NG3="D"
+fi
+
+if [[ $total1NG3 == 14 ]]
+then
+answer1NG3="E"
+fi
+
+if [[ $total1NG3 == 15 ]]
+then 
+answer1NG3="F"
+fi
+
+if [[ ($total2NG3 -gt 0) && ($total2NG3 -lt 10)]]
+then
+answer2NG3=$total2NG3
+fi
+
+
+if [[ $total2NG3 == 10 ]]
+then
+answer2NG3="A"
+fi
+
+if [[ $total2NG3 == 11 ]]
+then
+answer2NG3="B"
+fi
+
+if [[ $total2NG3 == 12 ]]
+then
+answer2NG3="C"
+fi
+
+if [[ $total2NG3 == 13 ]]
+then
+answer2NG3="D"
+fi
+
+if [[ $total2NG3 == 14 ]]
+then
+answer2NG3="E"
+fi
+
+if [[ $total2NG3 == 15 ]]
+then
+answer2NG3="F"
+fi
+
+#Hex conversion for row NG_ID = 3
+HexxyNG3=$answer1NG3$answer2NG3
+
+
+
+#Hexadecimal to Binary conversion for row NG_ID = 3
+
+hexallday=${HexxyNG3:1:1}
+hexallday2=${HexxyNG3:0:1}
+
+
+
+#converting last digit of Hex input
+if [ $hexallday == 1 ]
+then
+chex2NG3=0001
+fi
+
+if [ $hexallday == 2 ]
+then
+chex2NG3=0010
+fi
+
+if [ $hexallday == 3 ]
+then
+chex2NG3=0011
+fi
+
+if [ $hexallday == 4 ]
+then
+chex2NG3=0100
+fi
+
+if [ $hexallday == 5 ]
+then
+chex2NG3=0101
+fi
+
+if [ $hexallday == 6 ]
+then
+chex2NG3=0110
+fi
+
+if [ $hexallday == 7 ]
+then
+chex2NG3=0111
+fi
+
+if [ $hexallday == 8 ]
+then
+chex2NG3=1000
+fi
+
+if [ $hexallday == 9 ]
+then
+chex2NG3=1001
+fi
+
+if [ $hexallday == A ]
+then
+chex2NG3=1010
+fi
+
+if [ $hexallday == B ]
+then
+chex2NG3=1011
+fi
+
+if [ $hexallday == C ]
+then
+chex2NG3=1100
+fi
+
+if [ $hexallday == D ]
+then
+chex2NG3=1101
+fi
+
+if [ $hexallday == E ]
+then
+chex2NG3=1110
+fi
+
+if [ $hexallday == F ]
+then
+chex2NG3=1111
+fi
+
+#converting first digit of Hex input
+if [ $hexallday2 == 1 ]
+then
+chex3NG3=0001
+fi
+
+if [ $hexallday2 == 2 ]
+then
+chex3NG3=0010
+fi
+
+if [ $hexallday2 == 3 ]
+then
+chex3NG3=0011
+fi
+
+if [ $hexallday2 == 4 ]
+then
+chex3NG3=0100
+fi
+
+if [ $hexallday2 == 5 ]
+then
+chex3NG3=0101
+fi
+
+if [ $hexallday2 == 6 ]
+then
+chex3NG3=0110
+fi
+
+if [ $hexallday2 == 7 ]
+then
+chex3NG3=0111
+fi
+
+if [ $hexallday2 == 8 ]
+then
+chex3NG3=1000
+fi
+
+if [ $hexallday2 == 9 ]
+then
+chex3NG3=1001
+fi
+
+if [ $hexallday2 == A ]
+then
+chex3NG3=1010
+fi
+
+if [ $hexallday2 == B ]
+then
+chex3NG3=1011
+fi
+
+if [ $hexallday2 == C ]
+then
+chex3NG3=1100
+fi
+
+if [ $hexallday2 == D ]
+then
+chex3NG3=1101
+fi
+
+if [ $hexallday2 == E ]
+then
+chex3NG3=1110
+fi
+
+if [ $hexallday2 == F ]
+then
+chex3NG3=1111
+fi
+
+
+dectobinNG3=$chex3NG3$chex2NG3
+
+
+
+
+#inserting conversions back into table for row NG_ID = 3
+
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Dec = $OctaltoDecCNG3 where NG_ID=3;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Hex = $HexxyNG3 where NG_ID=3;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Binary = $dectobinNG3 where NG_ID=3;"
+
+#row 3 calculation complete and database updated
+
+
+#conversion of row 4 starts here NG_ID = 4 ********************************************************
+
+#Decimal to hex conversion
+
+
+if [[ ($dec4/128) ]]
+then
+num1NG4=$(( $dec4/128 ))
+
+num11NG4=$(( $dec4%128 ))
+
+if [[ $num11NG4/64 ]]
+then
+num2NG4=$(( $num11NG4/64 ))
+
+num22NG4=$(( $num11NG4%64 ))
+fi
+
+if [[ $num22NG4/32 ]]
+then
+num3NG4=$(( $num22NG4/32 ))
+
+num33NG4=$(( $num22NG4%32 ))
+fi
+
+if [[ $num33NG4/16 ]]
+then
+num4NG4=$(( $num33NG4/16 ))
+
+num44NG4=$(( $num33NG4%16 ))
+fi
+
+if [[ $num44NG4/8 ]]
+then
+num5NG4=$(( $num44NG4/8 ))
+
+num55NG4=$(( $num44NG4%8 ))
+fi
+
+if [[ $num55NG4/4 ]]
+then
+num6NG4=$(( $num55NG4/4 ))
+
+num66NG4=$(( $num55NG4%4 ))
+fi
+
+if [[ $num66NG4/2 ]]
+then
+num7NG4=$(( $num66NG4/2 ))
+
+num77NG4=$(( $num66NG4%2 ))
+fi
+
+if [[ $num77NG4/1 ]]
+then
+num8NG4=$(( $num77NG4/1 ))
+
+fi
+fi
+
+convertedtobinaryNG4=$num1NG4$num2NG4$num3NG4$num4NG4$num5NG4$num6NG4$num7NG4$num8NG4
+
+aNG4=${convertedtobinaryNG4:0:4}
+bNG4=${convertedtobinaryNG4:4:4}
+
+cNG4=${convertedtobinaryNG4:0:1}
+ccNG4=$(($cNG4 * 8))
+
+dNG4=${convertedtobinaryNG4:1:1}
+ddNG4=$(($dNG4 * 4))
+
+eNG4=${convertedtobinaryNG4:2:1}
+eeNG4=$(($eNG4 * 2))
+
+fNG4=${convertedtobinaryNG4:3:1}
+ffNG4=$(($fNG4 * 1))
+
+
+total1NG4=$(($ccNG4 + $ddNG4 + $eeNG4 + $ffNG4))
+
+
+
+gNG4=${convertedtobinaryNG4:4:1}
+ggNG4=$(($gNG4 * 8))
+
+hNG4=${convertedtobinaryNG4:5:1}
+hhNG4=$(($hNG4 * 4))
+
+iNG4=${convertedtobinaryNG4:6:1}
+iiNG4=$(($iNG4 * 2))
+
+jNG4=${convertedtobinaryNG4:7:1}
+jjNG4=$(($jNG4 * 1))
+
+
+total2NG4=$(($ggNG4 + $hhNG4 + $iiNG4 + $jjNG4))
+
+
+if [[ ($total1NG4 -gt 0) && ($total1NG4 -lt 10)]]
+then
+answer1NG4=$total1NG4
+fi
+
+if [[ $total1NG4 == 10 ]]
+then
+answer1NG4="A"
+fi
+
+if [[ $total1NG4 == 11 ]]
+then
+answer1NG4="B"
+fi
+
+if [[ $total1NG4 == 12 ]]
+then
+answer1NG4="C"
+fi
+
+if [[ $total1NG4 == 13 ]]
+then
+answer1NG4="D"
+fi
+
+if [[ $total1NG4 == 14 ]]
+then
+answer1NG4="E"
+fi
+
+if [[ $total1NG4 == 15 ]]
+then 
+answer1NG4="F"
+fi
+
+if [[ ($total2NG4 -gt 0) && ($total2NG4 -lt 10)]]
+then
+answer2NG4=$total2NG4
+fi
+
+
+if [[ $total2NG4 == 10 ]]
+then
+answer2NG4="A"
+fi
+
+if [[ $total2NG4 == 11 ]]
+then
+answer2NG4="B"
+fi
+
+if [[ $total2NG4 == 12 ]]
+then
+answer2NG4="C"
+fi
+
+if [[ $total2NG4 == 13 ]]
+then
+answer2NG4="D"
+fi
+
+if [[ $total2NG4 == 14 ]]
+then
+answer2NG4="E"
+fi
+
+if [[ $total2NG4 == 15 ]]
+then
+answer2NG4="F"
+fi
+
+
+HexxyNG4=$answer1NG4$answer2NG4
+
+
+
+#Hexadecimal to Binary for row NG_ID = 4
+
+hextobinNG4=${HexxyNG4:1:1}
+hextobin2NG4=${HexxyNG4:0:1}
+
+
+
+#converting last digit of Hex input
+if [ $hextobinNG4 == 1 ]
+then
+chex2NG4=0001
+fi
+
+if [ $hextobinNG4 == 2 ]
+then
+chex2NG4=0010
+fi
+
+if [ $hextobinNG4 == 3 ]
+then
+chex2NG4=0011
+fi
+
+if [ $hextobinNG4 == 4 ]
+then
+chex2NG4=0100
+fi
+
+if [ $hextobinNG4 == 5 ]
+then
+chex2NG4=0101
+fi
+
+if [ $hextobinNG4 == 6 ]
+then
+chex2NG4=0110
+fi
+
+if [ $hextobinNG4 == 7 ]
+then
+chex2NG4=0111
+fi
+
+if [ $hextobinNG4 == 8 ]
+then
+chex2NG4=1000
+fi
+
+if [ $hextobinNG4 == 9 ]
+then
+chex2NG4=1001
+fi
+
+if [ $hextobinNG4 == A ]
+then
+chex2NG4=1010
+fi
+
+if [ $hextobinNG4 == B ]
+then
+chex2NG4=1011
+fi
+
+if [ $hextobinNG4 == C ]
+then
+chex2NG4=1100
+fi
+
+if [ $hextobinNG4 == D ]
+then
+chex2NG4=1101
+fi
+
+if [ $hextobinNG4 == E ]
+then
+chex2NG4=1110
+fi
+
+if [ $hextobinNG4 == F ]
+then
+chex2NG4=1111
+fi
+
+#converting first digit of Hex 
+if [ $hextobin2NG4 == 1 ]
+then
+chex3NG4=0001
+fi
+
+if [ $hextobin2NG4 == 2 ]
+then
+chex3NG4=0010
+fi
+
+if [ $hextobin2NG4 == 3 ]
+then
+chex3NG4=0011
+fi
+
+if [ $hextobin2NG4 == 4 ]
+then
+chex3NG4=0100
+fi
+
+if [ $hextobin2NG4 == 5 ]
+then
+chex3NG4=0101
+fi
+
+if [ $hextobin2NG4 == 6 ]
+then
+chex3NG4=0110
+fi
+
+if [ $hextobin2NG4 == 7 ]
+then
+chex3NG4=0111
+fi
+
+if [ $hextobin2NG4 == 8 ]
+then
+chex3NG4=1000
+fi
+
+if [ $hextobin2NG4 == 9 ]
+then
+chex3NG4=1001
+fi
+
+if [ $hextobin2NG4 == A ]
+then
+chex3NG4=1010
+fi
+
+if [ $hextobin2NG4 == B ]
+then
+chex3NG4=1011
+fi
+
+if [ $hextobin2NG4 == C ]
+then
+chex3NG4=1100
+fi
+
+if [ $hextobin2NG4 == D ]
+then
+chex3NG4=1101
+fi
+
+if [ $hextobin2NG4 == E ]
+then
+chex3NG4=1110
+fi
+
+if [ $hextobin2NG4 == F ]
+then
+chex3NG4=1111
+fi
+
+
+hextobinforNG4=$chex3NG4$chex2NG4
+
+
+#Binary to Octal conversion for NG_ID = 4
+
+aNG4=${hextobinforNG4:0:2}
+bNG4=${hextobinforNG4:2:3}
+cNG4=${hextobinforNG4:5:3}
+
+
+#from right to left, the first 3rd to make up the Octal conversion
+c1NG4=${hextobinforNG4:5:1}
+c11NG4=$(( $c1NG4*4 ))
+
+c2NG4=${hextobinforNG4:6:1}
+c22NG4=$(( $c2NG4*2 ))
+
+c3NG4=${hextobinforNG4:7:1}
+c33NG4=$(( $c3NG4 ))
+
+total1NG4=$(( $c11NG4+$c22NG4+$c33NG4 ))
+
+
+
+#from right to left, the second 3rd to make up the octal conversion
+b1NG4=${hextobinforNG4:2:1}
+b11NG4=$(( $b1NG4*4 ))
+
+b2NG4=${hextobinforNG4:3:1}
+b22NG4=$(( $b2NG4*2 ))
+
+b3NG4=${hextobinforNG4:4:1}
+b33NG4=$(( $b3NG4*1 ))
+
+total2NG4=$(( $b11NG4+$b22NG4+$b33NG4 ))
+
+
+
+#from right to left, the third 3rd to make up the octal conversion
+a1NG4=$(( 0*4 ))
+
+a2NG4=${hextobinforNG4:0:1}
+a22NG4=$(( $a2NG4*2 ))
+
+a3NG4=${hextobinforNG4:1:1}
+a33NG4=$(( $a3NG4*1 ))
+
+total3NG4=$(( $a1NG4+$a22NG4+$a33NG4 ))
+
+
+#Conversion output
+OctyyNG4=$total3NG4$total2NG4$total1NG4
+
+
+
+
+
+#inserting conversions back into table for row NG_ID = 4
+
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Hex = $HexxyNG4 where NG_ID=4;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Binary = $hextobinforNG4 where NG_ID=4;"
+mysql -D db1725049 -u 1725049 -p$password -se"update  NumberGrid set NG_Oct = $OctyyNG4 where NG_ID=4;"
+
+#row 4 calculation complete and database updated
